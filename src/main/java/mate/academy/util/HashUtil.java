@@ -3,7 +3,6 @@ package mate.academy.util;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import org.hibernate.boot.model.naming.IllegalIdentifierException;
 
 public class HashUtil {
     private static final String CRYPTO_ALGORITHM = "SHA-256";
@@ -28,8 +27,8 @@ public class HashUtil {
                 hashedPassword.append(String.format("%02x", b));
             }
         } catch (NoSuchAlgorithmException e) {
-            throw new IllegalIdentifierException("Could not create "
-                    + "hash using SHA-512 algorithm, " + e);
+            throw new IllegalStateException("Could not create "
+                    + "hash using SHA-256 algorithm, " + e);
         }
         return hashedPassword.toString();
     }

@@ -83,6 +83,8 @@ public class UserDaoImpl implements UserDao {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("FROM User u WHERE u.email =: email",
                     User.class).setParameter("email", email).uniqueResultOptional();
+        } catch (Exception e) {
+            throw new DataProcessingException("Error while finding user by email", e);
         }
     }
 }

@@ -2,10 +2,14 @@ package mate.academy;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import mate.academy.exception.AuthenticationException;
+import mate.academy.exception.RegistrationException;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
 import mate.academy.model.MovieSession;
+import mate.academy.model.User;
+import mate.academy.service.AuthenticationService;
 import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
@@ -56,5 +60,27 @@ public class Main {
         System.out.println(movieSessionService.get(yesterdayMovieSession.getId()));
         System.out.println(movieSessionService.findAvailableSessions(
                         fastAndFurious.getId(), LocalDate.now()));
+
+        AuthenticationService auth = (AuthenticationService)
+                injector.getInstance(AuthenticationService.class);
+
+        String email = "test@example.com";
+        String password = "securePassword";
+
+        try {
+            User registeredUser = auth.register(email, password);
+            System.out.println("User registered successfully: "
+                    + registeredUser.getEmail());
+        } catch (RegistrationException e) {
+            System.err.println("Registration failed: " + e.getMessage());
+        }
+
+        try {
+            User loggedInUser = auth.login(email, password);
+            System.out.println("User logged in successfully: "
+                    + loggedInUser.getEmail());
+        } catch (AuthenticationException e) {
+            System.err.println("Login failed: " + e.getMessage());
+        }
     }
 }
