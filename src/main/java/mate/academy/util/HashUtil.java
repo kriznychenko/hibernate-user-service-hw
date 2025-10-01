@@ -1,5 +1,6 @@
 package mate.academy.util;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -22,7 +23,7 @@ public class HashUtil {
         try {
             MessageDigest message = MessageDigest.getInstance(CRYPTO_ALGORITHM);
             message.update(salt);
-            byte[] digest = message.digest(password.getBytes());
+            byte[] digest = message.digest(password.getBytes(StandardCharsets.UTF_8));
             for (byte b : digest) {
                 hashedPassword.append(String.format("%02x", b));
             }

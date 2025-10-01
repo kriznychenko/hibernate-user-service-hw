@@ -7,7 +7,7 @@ import mate.academy.model.User;
 public interface UserDao {
     User save(User user);
 
-    User getUser(int id);
+    User getUser(Long id);
 
     List<User> getAllUsers();
 
